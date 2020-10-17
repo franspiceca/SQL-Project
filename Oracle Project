@@ -101,3 +101,35 @@ SELECT MovieID, Title, IMDB, RottenTomatoes*100 || '%' AS Rotten_Tomatoes, EXTRA
 FROM MOVIE
 WHERE (EXTRACT(YEAR FROM CURRENT_DATE) - ReleaseYear) > (SELECT AVG(EXTRACT(YEAR FROM CURRENT_DATE) - ReleaseYear) AS Age
 FROM MOVIE);
+
+-- Question 4
+
+SELECT (CASE
+WHEN Age IN ('all') THEN 'All Ages'
+WHEN age IN ('all', '7+') THEN '7+'
+WHEN age IN ('all', '7+', '13+') THEN '13+'
+WHEN age IN ('all', '7+', '13+', '16+', '18+') THEN '18+'
+END) AS AgeRating, COUNT(MOVIE.MovieID) AS TotalMovies FROM MOVIE
+GROUP BY CASE
+WHEN Age IN 'all' THEN 'All Ages'
+WHEN age IN ('all', '7+') THEN '7+'
+WHEN age IN ('all', '7+', '13+') THEN '13+'
+WHEN age IN ('all', '7+', '13+', '16+', '18+') THEN '18+'
+END
+ORDER BY TotalMovies DESC;
+
+--Question 5 (Which Streaming Service is the Best Value)
+
+SELECT (CASE
+WHEN Netflix = 1 THEN 'Netflix'
+WHEN Hulu = 1 THEN 'Hulu'
+WHEN Prime = 1 THEN 'Amazon Prime'
+WHEN DisneyPlus = 1 THEN 'Disney Plus'
+END) AS StreamingService, COUNT(MovieID) AS MoviesAvaliable FROM MOVIE
+GROUP BY CASE
+WHEN Netflix = 1 THEN 'Netflix'
+WHEN Hulu = 1 THEN 'Hulu'
+WHEN Prime = 1 THEN 'Amazon Prime'
+WHEN DisneyPlus = 1 THEN 'Disney Plus'
+END
+ORDER BY MoviesAvaliable DESC;
