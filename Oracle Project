@@ -133,3 +133,56 @@ WHEN Prime = 1 THEN 'Amazon Prime'
 WHEN DisneyPlus = 1 THEN 'Disney Plus'
 END
 ORDER BY MoviesAvaliable DESC;
+
+-- Question 6a, Part 1 (Proportion of Best Movies by Streaming Service (by IMDb) SELECT 'Netflix', Netflix, SUM(Netflix)/(SELECT COUNT(MovieID)
+  
+FROM Movie
+WHERE IMDB > (SELECT AVG(IMDB)
+FROM MOVIE)) AS Proportion_of_Good_Movies FROM MOVIE
+WHERE IMDB > (SELECT AVG(IMDB) FROM MOVIE) AND Netflix=1
+GROUP BY Netflix
+UNION
+SELECT 'Prime', Prime, SUM(Prime)/(SELECT COUNT(MovieID) FROM Movie
+WHERE IMDB > (SELECT AVG(IMDB)
+FROM MOVIE)) AS Proportion_of_Good_Movies FROM MOVIE
+WHERE IMDB > (SELECT AVG(IMDB) FROM MOVIE) AND Prime=1
+GROUP BY Prime
+UNION
+SELECT 'HULU', HULU, SUM(HULU)/(SELECT COUNT(MovieID) FROM Movie
+WHERE IMDB > (SELECT AVG(IMDB)
+FROM MOVIE)) AS Proportion_of_Good_Movies FROM MOVIE
+WHERE IMDB > (SELECT AVG(IMDB) FROM MOVIE) AND HULU=1
+GROUP BY HULU
+UNION
+SELECT 'Disney+', DisneyPlus, SUM(DisneyPlus)/(SELECT COUNT(MovieID) FROM Movie
+WHERE IMDB > (SELECT AVG(IMDB)
+FROM MOVIE)) AS Proportion_of_Good_Movies FROM MOVIE
+WHERE IMDB > (SELECT AVG(IMDB) FROM MOVIE) AND DisneyPlus=1
+GROUP BY DisneyPlus;
+
+-- Question 6a Part 2 (Proportion of Best Movies by Streaming Service (by Rotten Tomatoes)
+
+SELECT 'Netflix', Netflix, SUM(Netflix)/(SELECT COUNT(MovieID) FROM Movie
+WHERE RottenTomatoes > (SELECT AVG(RottenTomatoes)
+FROM MOVIE)) AS Proportion_of_Good_Movies FROM MOVIE
+WHERE RottenTomatoes > (SELECT AVG(RottenTomatoes) FROM MOVIE) AND Netflix=1
+
+GROUP BY Netflix
+UNION
+SELECT 'Prime', Prime, SUM(Prime)/(SELECT COUNT(MovieID) FROM Movie
+WHERE RottenTomatoes > (SELECT AVG(RottenTomatoes)
+FROM MOVIE)) AS Proportion_of_Good_Movies FROM MOVIE
+WHERE RottenTomatoes > (SELECT AVG(RottenTomatoes) FROM MOVIE) AND Prime=1
+GROUP BY Prime
+UNION
+SELECT 'HULU', HULU, SUM(HULU)/(SELECT COUNT(MovieID) FROM Movie
+WHERE RottenTomatoes > (SELECT AVG(RottenTomatoes)
+FROM MOVIE)) AS Proportion_of_Good_Movies FROM MOVIE
+WHERE IMDB > (SELECT AVG(IMDB) FROM MOVIE) AND HULU=1
+GROUP BY HULU
+UNION
+SELECT 'Disney+', DisneyPlus, SUM(DisneyPlus)/(SELECT COUNT(MovieID) FROM Movie
+WHERE RottenTomatoes > (SELECT AVG(RottenTomatoes)
+FROM MOVIE)) AS Proportion_of_Good_Movies FROM MOVIE
+WHERE RottenTomatoes > (SELECT AVG(RottenTomatoes) FROM MOVIE) AND DisneyPlus=1
+GROUP BY DisneyPlus;
