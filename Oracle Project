@@ -24,3 +24,36 @@ CREATE TABLE COUNTRY(
 MovieID CHAR(7) NOT NULL,
 COUNTRY VARCHAR(30) NOT NULL,
 CONSTRAINT COUNTRY_PK PRIMARY KEY (MovieID, Country) );
+
+
+--Question 1, Part 1 (Movies Netflix Should Carry)
+
+SELECT Title
+FROM MOVIE JOIN LANGUAGE ON MOVIE.MovieID = LANGUAGE.MovieID JOIN GENRE ON MOVIE.MovieID = GENRE.MovieID JOIN COUNTRY ON MOVIE.MovieID = COUNTRY.MovieID
+WHERE IMDB > (SELECT AVG (IMDB) FROM MOVIE) AND RottenTomatoes > (SELECT AVG (RottenTomatoes) FROM MOVIE) AND (2020 - ReleaseYear > 1)
+GROUP BY Title
+ORDER BY Title ASC;
+
+--Question 1, Part 2 (Movies Hulu Should Carry)
+
+SELECT Title
+FROM MOVIE JOIN LANGUAGE ON MOVIE.MovieID = LANGUAGE.MovieID JOIN GENRE ON MOVIE.MovieID = GENRE.MovieID JOIN COUNTRY ON MOVIE.MovieID = COUNTRY.MovieID
+WHERE Language = 'English' AND Country = 'United States' AND IMDB > (SELECT AVG (IMDB) FROM MOVIE) AND RottenTomatoes > (SELECT AVG (RottenTomatoes) FROM MOVIE) AND (2020 - ReleaseYear > 1)
+GROUP BY Title
+ORDER BY Title ASC;
+
+--Question 1, Part 3 (Movies Prime Video Should Carry)
+
+SELECT Title
+FROM MOVIE JOIN LANGUAGE ON MOVIE.MovieID = LANGUAGE.MovieID JOIN GENRE ON MOVIE.MovieID = GENRE.MovieID JOIN COUNTRY ON MOVIE.MovieID = COUNTRY.MovieID
+WHERE Language = 'English' AND Country = 'United States' AND IMDB > (SELECT AVG (IMDB) FROM MOVIE) AND RottenTomatoes > (SELECT AVG (RottenTomatoes) FROM MOVIE)
+GROUP BY Title
+ORDER BY Title ASC;
+
+--Question 1, Part 4 (Movies Disney Plus Should Carry)
+    
+SELECT Title
+FROM MOVIE JOIN LANGUAGE ON MOVIE.MovieID = LANGUAGE.MovieID JOIN GENRE ON MOVIE.MovieID = GENRE.MovieID JOIN COUNTRY ON MOVIE.MovieID = COUNTRY.MovieID
+WHERE Language = 'English' AND Country = 'United States' AND Genre IN ('Animation','Comedy') AND Age IN ('7+', '13+')
+GROUP BY Title
+ORDER BY Title ASC;
