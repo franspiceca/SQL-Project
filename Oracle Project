@@ -57,3 +57,32 @@ FROM MOVIE JOIN LANGUAGE ON MOVIE.MovieID = LANGUAGE.MovieID JOIN GENRE ON MOVIE
 WHERE Language = 'English' AND Country = 'United States' AND Genre IN ('Animation','Comedy') AND Age IN ('7+', '13+')
 GROUP BY Title
 ORDER BY Title ASC;
+
+--Question 2, Part 1 (Average Rotten Tomatoes Rating By Streaming Service)
+
+SELECT 'Prime', AVG(RottenTomatoes) AS RT_Prime FROM MOVIE
+WHERE Prime = 1
+UNION
+SELECT 'HULU', AVG(RottenTomatoes) AS RT_HULU FROM MOVIE
+WHERE HULU = 1
+UNION
+SELECT 'Netflix', AVG(RottenTomatoes)AS RT_NETFLIX FROM MOVIE
+WHERE NETFLIX = 1
+UNION
+SELECT 'Disney+', AVG(RottenTomatoes) AS RT_DISNEYPLUS FROM MOVIE
+WHERE DISNEYPLUS = 1;
+
+-- Question 2, Part 2 (Average IMDb Rating By Streaming Service)
+
+SELECT 'Prime', AVG(IMDB) AS IMDB_Prime FROM MOVIE
+WHERE Prime = 1
+UNION
+SELECT 'HULU', AVG(IMDB) AS IMDB_HULU FROM MOVIE
+WHERE HULU = 1
+UNION
+SELECT 'Netflix', AVG(IMDB)AS IMDB_NETFLIX FROM MOVIE
+WHERE NETFLIX = 1
+UNION
+SELECT 'Disney+', AVG(IMDB) AS IMDB_DISNEYPLUS FROM MOVIE
+WHERE DISNEYPLUS = 1;
+
